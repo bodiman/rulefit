@@ -390,7 +390,7 @@ class RuleFit(BaseEstimator, TransformerMixin):
                 else:
                     self.tree_generator = GradientBoostingClassifier(n_estimators=n_estimators_default, max_leaf_nodes=self.tree_size, learning_rate=self.memory_par,subsample=self.sample_fract_,random_state=self.random_state,max_depth=100)
 
-            if   self.rfmode=='regress':
+            if   self.rfmode=='regress' or self.rfmode=='contrast':
                 if type(self.tree_generator) not in [GradientBoostingRegressor,RandomForestRegressor]:
                     raise ValueError("RuleFit only works with RandomForest and BoostingRegressor")
             else:
