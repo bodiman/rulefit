@@ -344,7 +344,9 @@ class RuleFit(BaseEstimator, TransformerMixin):
             tol=0.0001,
             max_iter=None,
             n_jobs=None,
-            random_state=None):
+            random_state=None,
+            latent_dim = 12
+    ):
         self.tree_generator = tree_generator
         self.rfmode=rfmode
         self.lin_trim_quantile=lin_trim_quantile
@@ -367,6 +369,7 @@ class RuleFit(BaseEstimator, TransformerMixin):
         self.max_iter=1000 if 'regress' else 100
         self.n_jobs=n_jobs
         self.Cs=Cs
+        self.latent_dim = latent_dim
 
     def fit(self, X, y=None, feature_names=None):
         """Fit and estimate linear combination of rule ensemble
@@ -386,7 +389,7 @@ class RuleFit(BaseEstimator, TransformerMixin):
                 if   self.rfmode=='regress':
                     self.tree_generator = GradientBoostingRegressor(n_estimators=n_estimators_default, max_leaf_nodes=self.tree_size, learning_rate=self.memory_par,subsample=self.sample_fract_,random_state=self.random_state,max_depth=100)
                 elif self.rfmode=='contrast':
-                    self.tree_generator = GradientBoostingRegressor(n_estimators=n_estimators_default, loss="contrastive", max_leaf_nodes=self.tree_size, learning_rate=self.memory_par,subsample=self.sample_fract_,random_state=self.random_state,max_depth=100)
+                    self.tree_generator = GradientBoostingRegressor(n_estimators=n_estimators_default, loss="contrastive", latent_dim=self.latent_dim, max_leaf_nodes=self.tree_size, learning_rate=self.memory_par,subsample=self.sample_fract_,random_state=self.random_state,max_depth=100)
                 else:
                     self.tree_generator = GradientBoostingClassifier(n_estimators=n_estimators_default, max_leaf_nodes=self.tree_size, learning_rate=self.memory_par,subsample=self.sample_fract_,random_state=self.random_state,max_depth=100)
 
