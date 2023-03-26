@@ -385,8 +385,10 @@ class RuleFit(BaseEstimator, TransformerMixin):
                 self.sample_fract_=min(0.5,(100+6*np.sqrt(N))/N)
                 if   self.rfmode=='regress':
                     self.tree_generator = GradientBoostingRegressor(n_estimators=n_estimators_default, max_leaf_nodes=self.tree_size, learning_rate=self.memory_par,subsample=self.sample_fract_,random_state=self.random_state,max_depth=100)
+                elif self.rfmode=='contrast':
+                    self.tree_generator = GradientBoostingRegressor(n_estimators=n_estimators_default, loss="contrastive", max_leaf_nodes=self.tree_size, learning_rate=self.memory_par,subsample=self.sample_fract_,random_state=self.random_state,max_depth=100)
                 else:
-                    self.tree_generator =GradientBoostingClassifier(n_estimators=n_estimators_default, max_leaf_nodes=self.tree_size, learning_rate=self.memory_par,subsample=self.sample_fract_,random_state=self.random_state,max_depth=100)
+                    self.tree_generator = GradientBoostingClassifier(n_estimators=n_estimators_default, max_leaf_nodes=self.tree_size, learning_rate=self.memory_par,subsample=self.sample_fract_,random_state=self.random_state,max_depth=100)
 
             if   self.rfmode=='regress':
                 if type(self.tree_generator) not in [GradientBoostingRegressor,RandomForestRegressor]:
