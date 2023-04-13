@@ -372,6 +372,8 @@ class RuleFit(BaseEstimator, TransformerMixin):
         self.n_jobs=n_jobs
         self.Cs=Cs
         self.latent_dim = latent_dim
+        self.margin_proportion = margin_proportion
+        self.batch_size = batch_size
 
     def fit(self, X, y=None, feature_names=None):
         """Fit and estimate linear combination of rule ensemble
