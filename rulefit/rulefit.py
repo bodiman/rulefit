@@ -424,7 +424,6 @@ class RuleFit(BaseEstimator, TransformerMixin):
                     random_state_add = self.random_state if self.random_state else 0
                     self.tree_generator.set_params(random_state=i_size+random_state_add) # warm_state=True seems to reset random_state, such that the trees are highly correlated, unless we manually change the random_sate here.
                     self.tree_generator.get_params()['n_estimators']
-                    print("tree generator fitted")
                     self.tree_generator.fit(np.copy(X, order='C'), np.copy(y, order='C'))
                     curr_est_=curr_est_+1
                 self.tree_generator.set_params(warm_start=False)
